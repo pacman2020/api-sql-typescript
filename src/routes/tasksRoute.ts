@@ -4,14 +4,13 @@ import {
     insert_tasks, 
     update_tasks, 
     find_by_id_tasks, 
-    delete_tasks } from './controllers/taskControlles'
+    delete_tasks } from '../controllers/taskController'
 
 
 const router = Router()
 
 router.route("/")
     .get(list_tasks)
-    .post(insert_tasks)
     .post(insert_tasks)
 
 router.route("/:id")

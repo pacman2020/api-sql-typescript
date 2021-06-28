@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { connect } from '../database'
 import { Task } from '../interface/Task'
-import { index, show, insert, update, destroy } from '../services/service'
+import { index, show, insert, update, destroy } from '../services/taskService'
+
+//chave estrageira user
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
     const tasks = await index()

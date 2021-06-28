@@ -2,11 +2,26 @@
 
 CREATE DATABASE node_mysql_ts;
 
-CREATE TABLE tasks(
+CREATE TABLE users(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(200) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    admin BOOLEAN DEFAULT false,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DESCRIBE users;
+
+-- 28/06/2021
+
+CREATE TABLE tasks(
+    task_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(200) NOT NULL,
     description TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id int,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 DESCRIBE tasks;
