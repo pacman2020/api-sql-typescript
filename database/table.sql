@@ -1,0 +1,12 @@
+-- 28/06/2021
+
+CREATE DATABASE node_mysql_ts;
+
+CREATE TABLE tasks(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DESCRIBE tasks;
