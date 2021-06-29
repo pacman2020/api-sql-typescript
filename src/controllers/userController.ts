@@ -3,7 +3,6 @@ import { User } from '../interface/User'
 import { register, find_email } from '../services/userService'
 import bcrypt from 'bcrypt'
 
-//verifica se email ja esta cadastrado
 
 export async function insert_users (request: Request, response: Response): Promise<Response> {
     const newUser: User = request.body
