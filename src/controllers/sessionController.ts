@@ -3,7 +3,6 @@ import { Session } from '../interface/Session'
 import { find_email } from '../services/userService'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-// import secret from '../.env'
 
 
 export async function session (request: Request, response: Response): Promise<Response> {
@@ -24,8 +23,7 @@ export async function session (request: Request, response: Response): Promise<Re
     //gera o token
     const token = jwt.sign({
         id: user['id']
-    }, 'senha-secreta', { expiresIn: "1h" })
-    console.log('---', token)
+    }, process.env.SECRET_KEY , { expiresIn: "5d" })
 
     return response.status(200).json({'message': token })
 }

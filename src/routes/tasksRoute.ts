@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { auth } from '../config/auth'
 import { 
     list_tasks, 
     insert_tasks, 
@@ -10,7 +11,7 @@ import {
 const router = Router()
 
 router.route("/")
-    .get(list_tasks)
+    .get( auth ,list_tasks)
     .post(insert_tasks)
 
 router.route("/:id")

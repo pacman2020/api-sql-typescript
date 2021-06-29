@@ -5,6 +5,7 @@ import { index, show, insert, update, destroy } from '../services/taskService'
 //chave estrageira user
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
+    // console.log('---> userId',request.userId)
     const tasks = await index()
     return response.status(200).json(tasks[0])
 }

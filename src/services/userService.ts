@@ -9,6 +9,13 @@ export async function register (newUser){
     return result
 }
 
+export async function find_by_id_user(id){
+    const conn = await connect()
+    const sql = 'SELECT * FROM users WHERE id=?'
+    const result = await conn.query(sql, [id])
+    return result
+}
+
 export async function find_email (email){
     const conn = await connect()
     const sql = 'SELECT * FROM users WHERE email=?'
