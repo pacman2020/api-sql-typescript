@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 export async function session (request: Request, response: Response): Promise<Response> {
     const sessionUser: Session = request.body
     const user = await find_email(sessionUser.email)
-
+    
     if(!user){
         return response.json({'message': 'email ou senha estão incorretos'})
     }

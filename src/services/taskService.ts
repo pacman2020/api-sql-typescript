@@ -9,7 +9,7 @@ export async function index (){
 
 export async function show (id){
     const conn = await connect()
-    const result = await conn.query('SELECT * FROM tasks WHERE tasks_id=?', id)
+    const result = await conn.query('SELECT * FROM tasks WHERE task_id=?', id)
     return result
 }
 
@@ -25,13 +25,13 @@ export async function insert (newTask){
 export async function update (updateTask, id){
     const conn = await connect()
     const data = [updateTask.title, updateTask.description, id]
-    const sql = 'UPDATE tasks SET title=?, description=? WHERE tasks_id=? '
+    const sql = 'UPDATE tasks SET title=?, description=? WHERE task_id=? '
     const res = await conn.query(sql, data)
     return res
 }
 
 export async function destroy (id){
     const conn = await connect()
-    const result = await conn.query('DELETE FROM tasks WHERE tasks_id=?', id)
+    const result = await conn.query('DELETE FROM tasks WHERE task_id=?', id)
     return result
 }
