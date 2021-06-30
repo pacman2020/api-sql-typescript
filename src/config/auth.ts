@@ -18,11 +18,8 @@ export async function auth(request: Request, response: Response, next: NextFunct
 
     try {
         const payload = await jwt.verify(token, process.env.SECRET_KEY) as IPayload
-        
-        // const user = await find_by_id_user(payload.id)
-        //verifição se usuario existe
 
-        // request.userId = payload.id
+        request.userId = payload.id
 
         next()
     } catch(err){

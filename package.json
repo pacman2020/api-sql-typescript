@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --env node --detectOpenHandles",
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "keywords": [],
   "author": "",
