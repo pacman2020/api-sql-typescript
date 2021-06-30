@@ -22,7 +22,8 @@ export async function session (request: Request, response: Response): Promise<Re
     
     //gera o token
     const token = jwt.sign({
-        id: user['id']
+        id: user['id'],
+        username: user['username']
     }, process.env.SECRET_KEY , { expiresIn: "5d" })
 
     return response.status(200).json({'message': token })

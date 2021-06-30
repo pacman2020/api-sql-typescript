@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 export interface IPayload {
     id: string;
+    username: string;
     iat: number;
     exp: number;
 } 
@@ -20,6 +21,7 @@ export async function auth(request: Request, response: Response, next: NextFunct
         const payload = await jwt.verify(token, process.env.SECRET_KEY) as IPayload
 
         request.userId = payload.id
+        request.userName = payload.username
 
         next()
     } catch(err){

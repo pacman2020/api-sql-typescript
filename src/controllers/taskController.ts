@@ -7,6 +7,7 @@ import { index, show, insert, update, destroy } from '../services/taskService'
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
     //para fazer outros tipo de validação
     const user_id = await request.userId
+    const user_username = await request.userName
     
     const tasks = await index()
     return response.status(200).json(tasks[0])
