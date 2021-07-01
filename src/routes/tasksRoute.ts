@@ -11,12 +11,12 @@ import {
 const router = Router()
 
 router.route("/")
-    .get( auth ,list_tasks)
-    .post(insert_tasks)
+    .get( list_tasks)
+    .post(auth,insert_tasks)
 
 router.route("/:id")
     .get(find_by_id_tasks)
-    .put(update_tasks)
-    .delete(delete_tasks)
+    .put(auth ,update_tasks)
+    .delete(auth ,delete_tasks)
 
 export default router

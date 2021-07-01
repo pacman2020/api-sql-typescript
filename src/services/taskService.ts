@@ -4,25 +4,33 @@ import { connect } from '../database'
 export async function index (){
     const conn = await connect()
     let result = await conn.query('SELECT * FROM tasks')
-    return result
+    const tasks = {...result[0]}
+    return tasks
 }
 
 export async function show (id){
     const conn = await connect()
     const result = await conn.query('SELECT * FROM tasks WHERE task_id=?', id)
-    return result
+    const task = {...result[0]}
+    
+    if (Object.values(task).length > 0){
+        return task
+    }
+    return false
 }
 
 export async function insert (newTask){
+    //user_id 
     const conn = await connect()
-    console.log(newTask)
-    const data = [newTask.title, newTask.description]
-    const sql = 'INSERT INTO tasks (title, description) VALUES (?, ?)'
+    console.log('---assasa---',newTask)
+    const data = [newTask.title, newTask.description, newTask.user_id]
+    const sql = 'INSERT INTO tasks (title, description, user_id) VALUES (?, ?, ?)'
     const result = await conn.query(sql, data)
     return result
 }
 
 export async function update (updateTask, id){
+    //user_id 
     const conn = await connect()
     const data = [updateTask.title, updateTask.description, id]
     const sql = 'UPDATE tasks SET title=?, description=? WHERE task_id=? '
