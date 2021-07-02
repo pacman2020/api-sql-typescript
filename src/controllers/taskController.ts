@@ -32,19 +32,45 @@ export async function insert_tasks (request: Request, response: Response): Promi
     }
     console.log('--', newTask)
 
-    // await insert(newTask)
+    await insert(newTask)
     return response.json({'message': 'created'})
 }
 
 export async function update_tasks (request: Request, response: Response): Promise<Response> {
-    const updateTask: Task = request.body
+    const user_id = Number(request.userId)
     const id = request.params.id
+
+    const task = await show(id)
+    if(!task){
+        return response.json({'message': 'task não existe'})
+    }
+
+    if(task.user_id != user_id){
+        return response.json({'message': 'usuario não tem permição'})
+    }
+
+    const updateTask: Task = {
+        ...request.body,
+        user_id
+    }
     await update(updateTask, id)
     return response.json({'message': 'updated'})
 }
 
 export async function delete_tasks (request: Request, response: Response): Promise<Response> {
+    const user_id = 2//Number(request.userId)
     const id = request.params.id
+
+    const task = await show(id)
+    
+    if(!task){
+        return response.json({'message': 'task não existe'})
+    }
+    
+    if(task.user_id != user_id){
+        return response.json({'message': 'usuario não tem permição'})
+    }
+
     await destroy(id)
     return response.json({'message': 'deleted'})
 }

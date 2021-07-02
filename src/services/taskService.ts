@@ -2,6 +2,7 @@ import { connect } from '../database'
 
 
 export async function index (){
+    //traze user de user_id
     const conn = await connect()
     let result = await conn.query('SELECT * FROM tasks')
     const tasks = {...result[0]}
@@ -9,9 +10,10 @@ export async function index (){
 }
 
 export async function show (id){
+    //traze user de user_id
     const conn = await connect()
     const result = await conn.query('SELECT * FROM tasks WHERE task_id=?', id)
-    const task = {...result[0]}
+    const task = {...result[0][0]}
     
     if (Object.values(task).length > 0){
         return task
@@ -30,8 +32,8 @@ export async function insert (newTask){
 export async function update (updateTask, id){
     //user_id 
     const conn = await connect()
-    const data = [updateTask.title, updateTask.description, id]
-    const sql = 'UPDATE tasks SET title=?, description=? WHERE task_id=? '
+    const data = [updateTask.title, updateTask.description, updateTask.user_id, id]
+    const sql = 'UPDATE tasks SET title=?, description=?, user_id=? WHERE task_id=? '
     const res = await conn.query(sql, data)
     return res
 }
