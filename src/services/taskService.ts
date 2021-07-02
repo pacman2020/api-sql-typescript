@@ -20,9 +20,7 @@ export async function show (id){
 }
 
 export async function insert (newTask){
-    //user_id 
     const conn = await connect()
-    console.log('---assasa---',newTask)
     const data = [newTask.title, newTask.description, newTask.user_id]
     const sql = 'INSERT INTO tasks (title, description, user_id) VALUES (?, ?, ?)'
     const result = await conn.query(sql, data)

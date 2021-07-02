@@ -32,7 +32,7 @@ export async function insert_tasks (request: Request, response: Response): Promi
     }
     console.log('--', newTask)
 
-    await insert(newTask)
+    // await insert(newTask)
     return response.json({'message': 'created'})
 }
 

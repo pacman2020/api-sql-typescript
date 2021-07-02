@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-// import { find_by_id_user } from '../services/userService'
+import { show_user } from '../services/userService'
 
 export interface IPayload {
     id: string;
@@ -19,6 +19,12 @@ export async function auth(request: Request, response: Response, next: NextFunct
 
     try {
         const payload = await jwt.verify(token, process.env.SECRET_KEY) as IPayload
+
+        const user = await show_user(payload.id)
+        
+        if(!user){
+            return response.status(404).json({ message: 'usuario nao encontrado :(' })
+        }
 
         request.userId = payload.id
         request.userName = payload.username
