@@ -4,7 +4,8 @@ import { connect } from '../database'
 export async function index (){
     //traze user de user_id
     const conn = await connect()
-    let result = await conn.query('SELECT * FROM tasks')
+    const sql = 'SELECT tasks.*, u.username, u.email FROM tasks INNER JOIN users AS u ON tasks.user_id=u.id'
+    let result = await conn.query(sql)
     const tasks = {...result[0]}
     return tasks
 }
@@ -12,7 +13,8 @@ export async function index (){
 export async function show (id){
     //traze user de user_id
     const conn = await connect()
-    const result = await conn.query('SELECT * FROM tasks WHERE task_id=?', id)
+    const sql = 'SELECT  tasks.*, u.username, u.email FROM tasks INNER JOIN users AS u ON tasks.user_id=u.id WHERE task_id=?'
+    const result = await conn.query(sql, id)
     const task = {...result[0][0]}
     
     if (Object.values(task).length > 0){
