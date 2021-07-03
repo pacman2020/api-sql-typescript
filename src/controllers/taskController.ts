@@ -4,9 +4,19 @@ import { index, show, insert, update, destroy } from '../services/taskService'
 
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
-    
-    const tasks = await index()
-    return response.status(200).json(tasks)
+    //paginação
+    const limit = Number(request.query.limit) ? Number(request.query.limit) : 100
+    const offset = Number(request.query.offset) ? Number(request.query.offset): 0
+
+    const tasks = await index( limit, offset)
+    const all_tasks = Object.values(tasks).length
+
+    return response.status(200).json({
+        limit,
+        offset,
+        all_tasks,
+        tasks
+    })
 }
 
 export async function find_by_id_tasks (request: Request, response: Response): Promise<Response> {
@@ -14,7 +24,7 @@ export async function find_by_id_tasks (request: Request, response: Response): P
     const task = await show(id)
 
     if(!task){
-        return response.json({'message': 'tasks não existe'})
+        return response.status(404).json({'message': 'task not found'})
     }
 
     return response.status(200).json(task)
@@ -29,7 +39,7 @@ export async function insert_tasks (request: Request, response: Response): Promi
     console.log('--', newTask)
 
     await insert(newTask)
-    return response.json({'message': 'created'})
+    return response.json({'message': 'task created successfully'})
 }
 
 export async function update_tasks (request: Request, response: Response): Promise<Response> {
@@ -38,11 +48,11 @@ export async function update_tasks (request: Request, response: Response): Promi
 
     const task = await show(id)
     if(!task){
-        return response.json({'message': 'task não existe'})
+        return response.json({'message': 'task not found'})
     }
 
     if(task.user_id != user_id){
-        return response.json({'message': 'usuario não tem permição'})
+        return response.json({'message': 'user does not have permission'})
     }
 
     const updateTask: Task = {
@@ -50,7 +60,7 @@ export async function update_tasks (request: Request, response: Response): Promi
         user_id
     }
     await update(updateTask, id)
-    return response.json({'message': 'updated'})
+    return response.json({'message': 'task updated successfully'})
 }
 
 export async function delete_tasks (request: Request, response: Response): Promise<Response> {
@@ -60,13 +70,13 @@ export async function delete_tasks (request: Request, response: Response): Promi
     const task = await show(id)
     
     if(!task){
-        return response.json({'message': 'task não existe'})
+        return response.json({'message': 'task not found'})
     }
     
     if(task.user_id != user_id){
-        return response.json({'message': 'usuario não tem permição'})
+        return response.json({'message': 'user does not have permission'})
     }
 
     await destroy(id)
-    return response.json({'message': 'deleted'})
+    return response.json({'message': 'task deteled successfully'})
 }

@@ -17,7 +17,7 @@ export async function insert_users (request: Request, response: Response): Promi
     newUser.password = hash
     
     await register(newUser)
-    return response.json({'message': 'created'})
+    return response.json({'message': 'user created successfully'})
 }
 
 export async function find_by_id_user (request: Request, response: Response): Promise<Response> {
@@ -25,7 +25,7 @@ export async function find_by_id_user (request: Request, response: Response): Pr
     const user = await show_user(id)
 
     if(!user){
-        return response.json({'message': 'usuario não existe'})
+        return response.json({'message': 'user not found'})
     }
 
     return response.json({'message': user})

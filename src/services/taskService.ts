@@ -1,11 +1,13 @@
 import { connect } from '../database'
 
 
-export async function index (){
-    //traze user de user_id
+export async function index (limit?: Number, offset?: Number){
+
     const conn = await connect()
-    const sql = 'SELECT tasks.*, u.username, u.email FROM tasks INNER JOIN users AS u ON tasks.user_id=u.id'
-    let result = await conn.query(sql)
+    const sql = 'SELECT tasks.*, u.username, u.email \
+        FROM tasks INNER JOIN users AS u ON tasks.user_id=u.id \
+        LIMIT ? OFFSET ?'
+    let result = await conn.query(sql, [limit, offset])
     const tasks = {...result[0]}
     return tasks
 }
@@ -13,7 +15,9 @@ export async function index (){
 export async function show (id){
     //traze user de user_id
     const conn = await connect()
-    const sql = 'SELECT  tasks.*, u.username, u.email FROM tasks INNER JOIN users AS u ON tasks.user_id=u.id WHERE task_id=?'
+    const sql = 'SELECT  tasks.*, u.username, u.email \
+                FROM tasks INNER JOIN users AS u ON \
+                tasks.user_id=u.id WHERE task_id=?'
     const result = await conn.query(sql, id)
     const task = {...result[0][0]}
     
