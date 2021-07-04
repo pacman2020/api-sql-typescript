@@ -5,16 +5,20 @@ import { index, show, insert, update, destroy } from '../services/taskService'
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
     //paginação
-    const limit = Number(request.query.limit) ? Number(request.query.limit) : 100
-    const offset = Number(request.query.offset) ? Number(request.query.offset): 0
+    const limit = Number(request.query.limit) ? Number(request.query.limit) : 5
+    let offset = Number(request.query.offset) ? Number(request.query.offset): 0
+    let currentPage = Number(request.query.currentPage) ? Number(request.query.currentPage): 0
 
-    const tasks = await index( limit, offset)
-    const all_tasks = Object.values(tasks).length
+    if(currentPage >0 && currentPage <= 100){
+        offset = (limit * currentPage)
+    }
+
+    const tasks = await index(limit, offset)
 
     return response.status(200).json({
-        limit,
-        offset,
-        all_tasks,
+        'limit': limit,
+        'offset': limit,
+        currentPage,
         tasks
     })
 }
