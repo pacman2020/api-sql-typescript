@@ -20,13 +20,11 @@ export async function findName (limit?: Number, offset?: Number, title?: String)
         tasks.user_id=u.id  WHERE title=? LIMIT ? OFFSET ?'
     let result = await conn.query(sql, [title, limit, offset])
     const tasks = {...result[0]}
-    // console.log(tasks[0])
     return tasks
 }
 
 
 export async function show (id){
-    //traze user de user_id
     const conn = await connect()
     const sql = 'SELECT  tasks.*, u.username, u.email \
                 FROM tasks INNER JOIN users AS u ON \
@@ -49,7 +47,6 @@ export async function insert (newTask){
 }
 
 export async function update (updateTask, id){
-    //user_id 
     const conn = await connect()
     const data = [updateTask.title, updateTask.description, updateTask.user_id, id]
     const sql = 'UPDATE tasks SET title=?, description=?, user_id=? WHERE task_id=? '

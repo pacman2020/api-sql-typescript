@@ -23,7 +23,7 @@ export async function auth(request: Request, response: Response, next: NextFunct
         const user = await show_user(payload.id)
         
         if(!user){
-            return response.status(404).json({ message: 'usuario nao encontrado :(' })
+            return response.status(404).json({ message: 'ussuario not found :(' })
         }
 
         request.userId = payload.id

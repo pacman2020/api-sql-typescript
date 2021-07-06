@@ -4,7 +4,7 @@ import { index, show, insert, update, destroy, findName } from '../services/task
 
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
-    //paginação
+    //pagination
     const limit = Number(request.query.limit) ? Number(request.query.limit) : 5
     let offset = Number(request.query.offset) ? Number(request.query.offset): 0
     let currentPage = Number(request.query.currentPage) ? Number(request.query.currentPage): 0

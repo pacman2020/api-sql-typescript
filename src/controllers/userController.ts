@@ -10,7 +10,7 @@ export async function insert_users (request: Request, response: Response): Promi
     
 
     if(user){
-        return response.json({'message': 'email ja esta cadastrado no nosso sistema'})
+        return response.json({'message': 'email is already registered in our system'})
     }
 
     const hash = bcrypt.hashSync(newUser.password, 10);

@@ -10,17 +10,17 @@ export async function session (request: Request, response: Response): Promise<Re
     const user = await find_email(sessionUser.email)
     
     if(!user){
-        return response.json({'message': 'email ou senha estão incorretos'})
+        return response.json({'message': 'email or password are incorrect'})
     }
 
-    //vericando senha com hash
+    //checking password
     const hash = bcrypt.compareSync(sessionUser.password, user['password']);
     
     if(!hash){
-        return response.json({'message': 'email ou senha estão incorretos'})
+        return response.json({'message': 'email or password are incorrect'})
     }
     
-    //gera o token
+    //generates the token
     const token = jwt.sign({
         id: user['id'],
         username: user['username']
