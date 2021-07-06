@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { Task } from '../interface/Task'
-import { index, show, insert, update, destroy } from '../services/taskService'
+import { index, show, insert, update, destroy, findName } from '../services/taskService'
 
 
 export async function list_tasks (request: Request, response: Response): Promise<Response> {
@@ -14,6 +14,28 @@ export async function list_tasks (request: Request, response: Response): Promise
     }
 
     const tasks = await index(limit, offset)
+
+    return response.status(200).json({
+        'limit': limit,
+        'offset': limit,
+        currentPage,
+        tasks
+    })
+}
+
+export async function find_title_tasks (request: Request, response: Response): Promise<Response> {
+
+    const title = String(request.params.title)
+    console.log(title)
+    const limit = Number(request.query.limit) ? Number(request.query.limit) : 5
+    let offset = Number(request.query.offset) ? Number(request.query.offset): 0
+    let currentPage = Number(request.query.currentPage) ? Number(request.query.currentPage): 0
+
+    if(currentPage >0 && currentPage <= 100){
+        offset = (limit * currentPage)
+    }
+
+    const tasks = await findName(limit, offset, title)
 
     return response.status(200).json({
         'limit': limit,

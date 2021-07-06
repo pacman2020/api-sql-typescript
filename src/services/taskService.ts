@@ -12,6 +12,19 @@ export async function index (limit?: Number, offset?: Number){
     return tasks
 }
 
+export async function findName (limit?: Number, offset?: Number, title?: String){
+
+    const conn = await connect()
+    const sql = 'SELECT tasks.*, u.username, u.email \
+        FROM tasks INNER JOIN users AS u ON \
+        tasks.user_id=u.id  WHERE title=? LIMIT ? OFFSET ?'
+    let result = await conn.query(sql, [title, limit, offset])
+    const tasks = {...result[0]}
+    console.log(tasks[0])
+    return tasks
+}
+
+
 export async function show (id){
     //traze user de user_id
     const conn = await connect()
