@@ -20,7 +20,7 @@ export async function findName (limit?: Number, offset?: Number, title?: String)
         tasks.user_id=u.id  WHERE title=? LIMIT ? OFFSET ?'
     let result = await conn.query(sql, [title, limit, offset])
     const tasks = {...result[0]}
-    console.log(tasks[0])
+    // console.log(tasks[0])
     return tasks
 }
 
